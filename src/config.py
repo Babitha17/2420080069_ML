@@ -1,0 +1,22 @@
+# config.py
+DATA_PATH = "data/mit-bih/"
+SAMPLE_RATE = 360
+WINDOW_SIZE = 187
+NUM_CLASSES = 17
+INPUT_SHAPE = (187, 1)
+BATCH_SIZE = 64
+EPOCHS = 30
+LEARNING_RATE = 0.001
+USE_ADASYN = False
+USE_FOCAL_LOSS = True
+FOCAL_GAMMA = 2.0
+TEST_SIZE = 0.2
+VAL_SIZE = 0.1
+RANDOM_SEED = 42
+
+CLASS_NAMES = {
+    0: 'NORMAL', 1: 'LBBB', 2: 'RBBB', 3: 'PVC', 4: 'PAB',
+    5: 'FUSED', 6: 'ESC', 7: 'VESC', 8: 'NP', 9: 'AP',
+    10: 'SVTA', 11: 'VT', 12: 'VFL', 13: 'VF', 14: 'SR',
+    15: 'BII', 16: 'ARR'
+}

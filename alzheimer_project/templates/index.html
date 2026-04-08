@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Alzheimer Detection</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            overflow: hidden;
+            background: linear-gradient(135deg, #2c3e50, #4ca1af);
+        }
+
+        /* ✨ Sparkles */
+        .sparkles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(white 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.2;
+            animation: move 20s linear infinite;
+        }
+
+        @keyframes move {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100px); }
+        }
+
+        .overlay {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            width: 420px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        .subtitle {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        /* 🔥 Custom upload button */
+        .upload-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #4ca1af;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .upload-btn:hover {
+            background: #357f8e;
+        }
+
+        #fileName {
+            font-size: 13px;
+            color: #666;
+            margin: 10px 0;
+        }
+
+        input[type="submit"] {
+            padding: 10px 25px;
+            background: #4ca1af;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background: #357f8e;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #f4f9fa;
+        }
+
+        .low { color: #2e7d32; }
+        .medium { color: #e6a700; }
+        .high { color: #c62828; }
+
+        .confidence {
+            color: #555;
+            font-size: 14px;
+        }
+
+        .message {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="sparkles"></div>
+
+<div class="overlay">
+
+<div class="container">
+    <h1>Alzheimer Detection</h1>
+    <p class="subtitle">AI-powered neurological analysis of MRI scans</p>
+
+    <form action="/predict" method="post" enctype="multipart/form-data">
+        
+        <!-- Hidden input -->
+        <input type="file" id="fileInput" name="file" required hidden>
+
+        <!-- Custom button -->
+        <label for="fileInput" class="upload-btn">Choose MRI Image</label>
+
+        <!-- File name -->
+        <p id="fileName">No file selected</p>
+
+        <input type="submit" value="Analyze MRI">
+    </form>
+
+    {% if prediction %}
+        <div class="result">
+            <h3 class="
+                {% if prediction == 'Non_Demented' %}low
+                {% elif prediction == 'Very_Mild_Demented' %}medium
+                {% else %}high
+                {% endif %}
+            ">
+                {{ prediction }}
+            </h3>
+
+            <p class="confidence">Confidence: {{ confidence }}%</p>
+            <p class="message">{{ message }}</p>
+        </div>
+    {% endif %}
+</div>
+
+</div>
+
+<!-- 🔥 JS for file name -->
+<script>
+    const fileInput = document.getElementById("fileInput");
+    const fileName = document.getElementById("fileName");
+
+    fileInput.addEventListener("change", function() {
+        if (fileInput.files.length > 0) {
+            fileName.textContent = fileInput.files[0].name;
+        } else {
+            fileName.textContent = "No file selected";
+        }
+    });
+</script>
+
+</body>
+</html>
